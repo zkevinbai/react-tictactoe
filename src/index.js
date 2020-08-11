@@ -26,6 +26,11 @@ class Board extends React.Component {
 
     handleClick(i) {
         const newSquares = this.state.squares.slice();
+
+        if (this.calculateWinner(newSquares) || newSquares[i]) {
+            return;
+        }
+
         newSquares[i] = this.state.next;
         let newNext;
         if (this.state.next === 'X'){
@@ -42,7 +47,7 @@ class Board extends React.Component {
         });
     }
 
-    checkWinner(squares) {
+    calculateWinner(squares) {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -56,35 +61,12 @@ class Board extends React.Component {
 
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
-
-            if (squares[a] === null) {
-                this.setState({ 
-                    hasWon: false
-                });
-                return
-            }
-
-            const winningLine = squares[a] === squares[b] &&
-                squares[b] === squares[c] 
-
-            if (winningLine && squares[a] === 'X') {
-                this.setState({ 
-                    hasWon: true,
-                    winner: 'X'
-                })
-                return
-            } else if (winningLine && squares[a] === 'O') {
-                this.setState({
-                    hasWon: true,
-                    winner: 'O'
-                })    
-                return
+            if (squares[a] === squares[b] && squares[b] === squares[c]) {
+                return squares[a];
             }
         }
 
-        this.setState({ 
-            hasWon: false
-        })
+        return null;
     };
 
     renderSquare(i) {
@@ -95,13 +77,18 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = `Next player: ${this.state.next}`;
-        const winning = `Someone has Won: ${this.state.hasWon ? this.state.winner : 'Nobody'}`;
+        const winner = this.calculateWinner(this.state.squares);
+        let status;
+
+        if (winner) {
+            status = 'Winner' + winner
+        } else {
+            status = `Next player: ${this.state.next}`;
+        }
 
         return (
             <div>
                 <div className="status">{status}</div>
-                <div className="status">{winning}</div>
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
