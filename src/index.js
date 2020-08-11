@@ -55,26 +55,37 @@ class Board extends React.Component {
         ];
 
         for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
+            const [a, b, c] = lines[i];
 
-            const winningLine = this.checkLine({line, squares});
-            if (winningLine) {
-                this.setState({ hasWon: true })
-                return;
+            if (squares[a] === null) {
+                this.setState({ 
+                    hasWon: false
+                });
+                return
+            }
+
+            const winningLine = squares[a] === squares[b] &&
+                squares[b] === squares[c] 
+
+            if (winningLine && squares[a] === 'X') {
+                this.setState({ 
+                    hasWon: true,
+                    winner: 'X'
+                })
+                return
+            } else if (winningLine && squares[a] === 'O') {
+                this.setState({
+                    hasWon: true,
+                    winner: 'O'
+                })    
+                return
             }
         }
 
-        this.setState({ hasWon: false })
+        this.setState({ 
+            hasWon: false
+        })
     };
-
-    checkLine({line, squares}) {
-        if (squares[line[0]] === null) {
-            return false;
-        }
-
-        return squares[line[0]] === squares[line[1]] &&
-            squares[line[1]]  === squares[line[2]];
-    }
 
     renderSquare(i) {
         return <Square 
@@ -85,7 +96,7 @@ class Board extends React.Component {
 
     render() {
         const status = `Next player: ${this.state.next}`;
-        const winning = `Someone has Won: ${this.state.hasWon}`;
+        const winning = `Someone has Won: ${this.state.hasWon ? this.state.winner : 'Nobody'}`;
 
         return (
             <div>
