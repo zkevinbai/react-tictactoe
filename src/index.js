@@ -39,8 +39,6 @@ class Board extends React.Component {
             newNext = 'X';
         };
 
-        this.checkWinner(newSquares);
-
         this.setState({
             squares: newSquares,
             next: newNext,
