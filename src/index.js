@@ -53,8 +53,9 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null)
             }],
-            next: 'X',
+            xIsNext: true,
             winner: false,
+            stepNumber: 0,
         }
     }
 
@@ -67,20 +68,14 @@ class Game extends React.Component {
             return;
         }
 
-        newSquares[i] = this.state.next;
-
-        let newNext;
-        if (this.state.next === 'X') {
-            newNext = 'O';
-        } else {
-            newNext = 'X';
-        };
+        newSquares[i] = this.state.xIsNext ? 'X' : 'O';
 
         this.setState({
             history: history.concat([{
                 squares: newSquares,
             }]),
-            next: newNext,
+            xIsNext: !this.state.xIsNext,
+            stepNumber: this.state.stepNumber + 1
         });
     }
 
@@ -90,9 +85,7 @@ class Game extends React.Component {
         const newSquares = currentBoard.squares.slice();
 
         // this.setState({
-        //     history: history.concat([{
-        //         squares: newSquares,
-        //     }]),
+        //     timeTravel: newSquares,
         // });
     }
 
@@ -128,7 +121,7 @@ class Game extends React.Component {
         if (winner) {
             status = 'Winner: ' + winner
         } else {
-            status = `Next player: ${this.state.next}`;
+            status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
         }
 
         const moves = history.map( (board, index) => {
@@ -150,9 +143,7 @@ class Game extends React.Component {
             <div className="game">
                 <div className="game-board">
                     <Board 
-                        squares={currentBoard.squares}
-                        next={this.state.next}
-                        winner={this.state.winner}
+                        squares={ this.state.timeTravel || currentBoard.squares}
                         onClick={this.handleClick.bind(this)}
                     />
                 </div>
