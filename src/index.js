@@ -73,7 +73,11 @@ class Game extends React.Component {
                 squares: newSquares,
             }]),
             xIsNext: !this.state.xIsNext,
-            stepNumber: history.length,
+            stepNumber: history.length, // this is the current history length, before the concat fires
+                // if we are adding step 2, and will have 2 history items after
+                // history.length will still evaluate to 1
+                // but 1 is the correct stepNumber to access the last element in the history array
+                // because you count from 0 in JS
         });
     }
 
@@ -110,6 +114,8 @@ class Game extends React.Component {
 
     render() {
         const history = this.state.history;
+        console.log('HISTORY: ', history)
+        console.log('STEPNUMBER: ', this.state.stepNumber)
         const currentBoard = history[this.state.stepNumber];
         const winner = this.calculateWinner(currentBoard.squares);
 
