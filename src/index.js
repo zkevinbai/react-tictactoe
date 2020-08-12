@@ -68,6 +68,7 @@ class Game extends React.Component {
         }
 
         newSquares[i] = this.state.next;
+
         let newNext;
         if (this.state.next === 'X') {
             newNext = 'O';
