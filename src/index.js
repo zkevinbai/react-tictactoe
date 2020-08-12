@@ -75,18 +75,15 @@ class Game extends React.Component {
                 squares: newSquares,
             }]),
             xIsNext: !this.state.xIsNext,
-            stepNumber: this.state.stepNumber + 1
+            stepNumber: history.length,
         });
     }
 
-    jumpTo(index) {
-        const history = this.state.history;
-        const currentBoard = history[index];
-        const newSquares = currentBoard.squares.slice();
-
-        // this.setState({
-        //     timeTravel: newSquares,
-        // });
+    jumpTo(step) {
+        this.setState({
+            stepNumber: step,
+            xIsNext: (step % 2 === 0),
+        });
     }
 
     calculateWinner(squares) {
@@ -129,7 +126,7 @@ class Game extends React.Component {
                 <li
                     key={index}
                 >
-                    <button onClick={this.jumpTo(index)}>
+                    <button onClick={() => this.jumpTo(index)}>
                         {index ?
                             'Go to move #' + index :
                             'Go to game start'
