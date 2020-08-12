@@ -14,11 +14,11 @@ function Square(props) {
 }
 
 function Board(props) {
-    const renderSquare = (i) => {
+    const renderSquare = (index) => {
         return (
             <Square 
-                value={props.squares[i]} 
-                onClick={() => props.onClick(i)}
+                value={props.squares[index]} 
+                onClick={() => props.onClick(index)}
             />
         );
     }
@@ -57,16 +57,16 @@ class Game extends React.Component {
         }
     }
 
-    handleClick(i) {
+    handleClick(index) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const currentBoard = history[history.length - 1];
         const newSquares = currentBoard.squares.slice();
 
-        if (this.calculateWinner(newSquares) || newSquares[i]) {
+        if (this.calculateWinner(newSquares) || newSquares[index]) {
             return;
         }
 
-        newSquares[i] = this.state.xIsNext ? 'X' : 'O';
+        newSquares[index] = this.state.xIsNext ? 'X' : 'O';
 
         this.setState({
             history: history.concat([{
@@ -138,7 +138,7 @@ class Game extends React.Component {
             <div className="game">
                 <div className="game-board">
                     <Board 
-                        squares={ this.state.timeTravel || currentBoard.squares}
+                        squares={ currentBoard.squares}
                         onClick={this.handleClick.bind(this)}
                     />
                 </div>
