@@ -14,11 +14,11 @@ function Square(props) {
 }
 
 function Board(props) {
-    const renderSquare = (index) => {
+    const renderSquare = (index, row, column) => {
         return (
             <Square 
                 value={props.squares[index]} 
-                onClick={() => props.onClick(index)}
+                onClick={() => props.onClick(index, row, column)}
             />
         );
     }
@@ -26,19 +26,19 @@ function Board(props) {
     return (
         <div>
             <div className="board-row">
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
+                {renderSquare(0, 1, 1)}
+                {renderSquare(1, 1, 2)}
+                {renderSquare(2, 1, 3)}
             </div>
             <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
+                {renderSquare(3, 2, 1)}
+                {renderSquare(4, 2, 2)}
+                {renderSquare(5, 2, 3)}
             </div>
             <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
+                {renderSquare(6, 3, 1)}
+                {renderSquare(7, 3, 2)}
+                {renderSquare(8, 3, 3)}
             </div>
         </div>
     );
@@ -51,7 +51,8 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
                 player: null,
-                moveIndex: null,
+                moveRow: null,
+                moveColumn: null,
             }],
             xIsNext: true,
             winner: false,
@@ -63,7 +64,7 @@ class Game extends React.Component {
         return this.state.xIsNext ? 'X' : 'O'
     }
 
-    handleClick (index) {
+    handleClick (index, row, column) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const currentBoard = history[history.length - 1];
         const newSquares = currentBoard.squares.slice();
@@ -80,7 +81,8 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: newSquares,
                 player,
-                moveIndex: index,
+                moveRow: row,
+                moveColumn: column,
             }]),
             xIsNext: !this.state.xIsNext,
             stepNumber: history.length, // this is the current history length, before the concat fires
@@ -138,7 +140,7 @@ class Game extends React.Component {
         }
 
         const moves = history.map( (board, index) => {
-            const { player, moveIndex } = board;
+            const { player, moveRow, moveColumn } = board;
 
             return (
                 <li
@@ -146,7 +148,7 @@ class Game extends React.Component {
                 >
                     <button onClick={() => this.jumpTo(index)}>
                         {index ?
-                            `Go to move # ${index} by ${player}`:
+                            `Go to move # ${index} by ${player} at row ${moveRow} row and column ${moveColumn}`:
                             'Go to game start'
                         }
                     </button>
