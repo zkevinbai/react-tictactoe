@@ -51,7 +51,7 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
                 player: null,
-                index: null,
+                moveIndex: null,
             }],
             xIsNext: true,
             winner: false,
@@ -80,7 +80,7 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: newSquares,
                 player,
-                index,
+                moveIndex: index,
             }]),
             xIsNext: !this.state.xIsNext,
             stepNumber: history.length, // this is the current history length, before the concat fires
@@ -138,13 +138,15 @@ class Game extends React.Component {
         }
 
         const moves = history.map( (board, index) => {
+            const { player, moveIndex } = board;
+
             return (
                 <li
                     key={index}
                 >
                     <button onClick={() => this.jumpTo(index)}>
                         {index ?
-                            'Go to move #' + index :
+                            `Go to move # ${index} by ${player}`:
                             'Go to game start'
                         }
                     </button>
