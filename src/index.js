@@ -43,37 +43,11 @@ function Board(props) {
         </div>
     )
 
-    const renderBoard = () => {
-        for (let i=0; i < 3; i++) {
-            return renderRow(i);
-        }
-    }
+    const rows = [1, 2, 3];
 
     return (
         <div>
-            {renderRow(1)}
-            {renderRow(2)}
-            {renderRow(3)}
-        </div>
-    );
-
-    return (
-        <div>
-            <div className="board-row">
-                {renderSquare(0, 1, 1)}
-                {renderSquare(1, 1, 2)}
-                {renderSquare(2, 1, 3)}
-            </div>
-            <div className="board-row">
-                {renderSquare(3, 2, 1)}
-                {renderSquare(4, 2, 2)}
-                {renderSquare(5, 2, 3)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6, 3, 1)}
-                {renderSquare(7, 3, 2)}
-                {renderSquare(8, 3, 3)}
-            </div>
+            {rows.map((row) => renderRow(row))}
         </div>
     );
 }
