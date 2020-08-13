@@ -14,7 +14,7 @@ function Square(props) {
 }
 
 function Board(props) {
-    const renderSquare = (index, row, column) => {
+    const renderSquare = ({index, row, column}) => {
         return (
             <Square 
                 value={props.squares[index]} 
@@ -22,6 +22,40 @@ function Board(props) {
             />
         );
     }
+
+    const renderRow = (row) => (
+        <div className="board-row">
+            {renderSquare({
+                index: 0 + (3 * (row - 1)),
+                row, 
+                column: 1,
+            })}
+            {renderSquare({
+                index: 1 + (3 * (row - 1)),
+                row, 
+                column: 2,
+            })}
+            {renderSquare({
+                index: 2 + (3 * (row - 1)),
+                row, 
+                column: 3,
+            })}
+        </div>
+    )
+
+    const renderBoard = () => {
+        for (let i=0; i < 3; i++) {
+            return renderRow(i);
+        }
+    }
+
+    return (
+        <div>
+            {renderRow(1)}
+            {renderRow(2)}
+            {renderRow(3)}
+        </div>
+    );
 
     return (
         <div>
