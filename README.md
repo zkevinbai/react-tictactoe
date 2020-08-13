@@ -1,16 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 # Tutorial
 https://reactjs.org/tutorial/tutorial.html
 
-## Tutorial
-
-- [x] Build game board.
+- [x] Build game using react.
 - [x] Allow game to declare winner.
 - [x] Implement turn based time travel.
 
-## Challenges
-
+# Challenges
 - [x] Display the location for each move in the format (col, row) in the move history list.
   - provide row and column data to your squares, pass that information up in their onclick function
 
@@ -43,6 +38,8 @@ These are supposed to be ranked in terms of increasing difficulty.  But I found 
 
 ## Flip Direction
 <img src="https://github.com/zkevinbai/react-tictactoe/blob/master/assets/flip_direction.gif" align="center"/>
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
