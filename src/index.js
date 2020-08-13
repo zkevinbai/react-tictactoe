@@ -146,9 +146,9 @@ class Game extends React.Component {
                 <li
                     key={index}
                 >
-                    <button onClick={() => this.jumpTo(index)}>
+                    <button className="game-move-button" onClick={() => this.jumpTo(index)}>
                         {index ?
-                            `Go to move # ${index} by ${player} at row ${moveRow} row and column ${moveColumn}`:
+                            `Go to move # ${index} by ${player} at row ${moveRow} and column ${moveColumn}`:
                             'Go to game start'
                         }
                     </button>
