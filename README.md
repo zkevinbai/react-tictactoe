@@ -33,7 +33,16 @@ https://reactjs.org/tutorial/tutorial.html
   - calculate tie, set custom status if tie
   - my solution: `const tie = currentBoard.squares.every(position => position) && !winningMoves;`
 
-These are supposed to be ranked in terms of increasing difficulty.  But I found 5 harder than 6.  
+These are supposed to be ranked in terms of increasing difficulty.  But I found 5 harder than 6. 
+
+## Screenshot
+<img src="https://github.com/zkevinbai/react-tictactoe/blob/master/assets/screen_shot.png" align="center"/>
+
+## Time Travel
+<img src="https://github.com/zkevinbai/react-tictactoe/blob/master/assets/time_travel.gif" align="center"/>
+
+## Flip Direction
+<img src="https://github.com/zkevinbai/react-tictactoe/blob/master/assets/flip_direction.gif" align="center"/>
 
 ## Available Scripts
 
