@@ -51,7 +51,7 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
                 player: null,
-                moveIndex: null,
+                index: null,
             }],
             xIsNext: true,
             winner: false,
@@ -79,6 +79,8 @@ class Game extends React.Component {
         this.setState({
             history: history.concat([{
                 squares: newSquares,
+                player,
+                index,
             }]),
             xIsNext: !this.state.xIsNext,
             stepNumber: history.length, // this is the current history length, before the concat fires
