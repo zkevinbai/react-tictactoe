@@ -185,6 +185,7 @@ class Game extends React.Component {
             const { player, moveRow, moveColumn } = board;
 
             let buttonClassName = "game-move-button";
+
             if (this.state.selected === index) {
                 buttonClassName = "game-move-button game-move-button-selected"
             }
