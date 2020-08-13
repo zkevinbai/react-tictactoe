@@ -121,14 +121,6 @@ class Game extends React.Component {
         });
     }
 
-    jumpTo (step) {
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2 === 0),
-            selected: step,
-        });
-    }
-
     calculateWinningMoves (squares) {
         const lines = [
             [0, 1, 2],
@@ -153,6 +145,14 @@ class Game extends React.Component {
         return null;
     };
 
+    jumpTo (step) {
+        this.setState({
+            stepNumber: step,
+            xIsNext: (step % 2 === 0),
+            selected: step,
+        });
+    }
+
     sortMoves () {
         this.setState({
             movesDescending: !this.state.movesDescending
@@ -163,11 +163,14 @@ class Game extends React.Component {
         const history = this.state.history;
         const currentBoard = history[this.state.stepNumber];
         const winningMoves = this.calculateWinningMoves(currentBoard.squares);
+        const tie = currentBoard.squares.every(position => position) && !winningMoves;
 
         let status;
 
         if (winningMoves) {
             status = 'Winner: ' + currentBoard.squares[winningMoves[0]]
+        } else if (tie) {
+            status = 'Tie game no winner'
         } else {
             status = `Next player: ${this.getPlayer()}`;
         }
