@@ -43,8 +43,8 @@ function Board({
 
                 return (
                     <Square
-                        squareClass={squareClass}
                         key={row + column}
+                        squareClass={squareClass}
                         value={squares[index]}
                         index={index}
                         row={row}
