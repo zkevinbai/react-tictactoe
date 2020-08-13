@@ -68,7 +68,7 @@ class Game extends React.Component {
             winner: false,
             stepNumber: 0,
             selected: null,
-            movesDescending: true,
+            // movesDescending: true,
         }
     }
 
@@ -137,14 +137,14 @@ class Game extends React.Component {
         return null;
     };
 
-    sortMoves () {
-        this.setState({
-            movesDescending: !this.state.movesDescending
-        })
-    }
+    // sortMoves () {
+    //     this.setState({
+    //         movesDescending: !this.state.movesDescending
+    //     })
+    // }
 
     render () {
-        let history = this.state.history;
+        const history = this.state.history;
         const currentBoard = history[this.state.stepNumber];
         const winner = this.calculateWinner(currentBoard.squares);
 
@@ -156,10 +156,9 @@ class Game extends React.Component {
             status = `Next player: ${this.getPlayer()}`;
         }
 
-        if (!this.state.movesDescending) {
-            debugger;
-            history = history.reverse();
-        }
+        // if (!this.state.movesDescending) {
+        //     history = history.reverse();
+        // }
 
         const moves = history.map( (board, index) => {
             const { player, moveRow, moveColumn } = board;
@@ -174,7 +173,7 @@ class Game extends React.Component {
                     key={index}
                 >
                     <button className={buttonClassName} onClick={() => this.jumpTo(index)}>
-                        {index ?
+                        {moveRow && moveColumn ?
                             `Go to move # ${index} by ${player} at row ${moveRow} and column ${moveColumn}`:
                             'Go to game start'
                         }
@@ -193,9 +192,9 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <button onClick={() => this.sortMoves()}>
+                    {/* <button onClick={() => this.sortMoves()}>
                         Sort moves
-                    </button>
+                    </button> */}
                     <ol>{moves}</ol>
                 </div>
             </div>
