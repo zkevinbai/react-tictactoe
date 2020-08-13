@@ -90,6 +90,7 @@ class Game extends React.Component {
                 // history.length will still evaluate to 1
                 // but 1 is the correct stepNumber to access the last element in the history array
                 // because you count from 0 in JS
+            selected: null,
         });
     }
 
@@ -97,6 +98,7 @@ class Game extends React.Component {
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2 === 0),
+            selected: step,
         });
     }
 
@@ -126,8 +128,6 @@ class Game extends React.Component {
 
     render() {
         const history = this.state.history;
-        console.log('HISTORY: ', history)
-        console.log('STEPNUMBER: ', this.state.stepNumber)
         const currentBoard = history[this.state.stepNumber];
         const winner = this.calculateWinner(currentBoard.squares);
 
@@ -142,11 +142,16 @@ class Game extends React.Component {
         const moves = history.map( (board, index) => {
             const { player, moveRow, moveColumn } = board;
 
+            let buttonClassName = "game-move-button";
+            if (this.state.selected === index) {
+                buttonClassName = "game-move-button game-move-button-selected"
+            }
+
             return (
                 <li
                     key={index}
                 >
-                    <button className="game-move-button" onClick={() => this.jumpTo(index)}>
+                    <button className={buttonClassName} onClick={() => this.jumpTo(index)}>
                         {index ?
                             `Go to move # ${index} by ${player} at row ${moveRow} and column ${moveColumn}`:
                             'Go to game start'

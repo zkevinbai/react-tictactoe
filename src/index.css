@@ -52,3 +52,7 @@ ol, ul {
 .game-move-button:hover {
   font-weight: bold;
 }
+
+.game-move-button-selected {
+  font-weight: bold;
+}
