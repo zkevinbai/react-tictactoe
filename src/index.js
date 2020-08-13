@@ -19,7 +19,10 @@ function Square({
     );
 }
 
-function Board({ squares, onClick }) {
+function Board({ 
+    squares,
+    onClick,
+}) {
     const columns = [1, 2, 3]
     const rows = [1, 2, 3];
 
@@ -28,6 +31,7 @@ function Board({ squares, onClick }) {
             {columns.map((column) => {
                 const index = (column - 1) + (3 * (row - 1));
                 // this generates indices 0 through 8
+                // I would prefer to hard code for clarity, this is for a challenge
 
                 return (
                     <Square
