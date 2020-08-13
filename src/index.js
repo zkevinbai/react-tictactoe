@@ -68,7 +68,7 @@ class Game extends React.Component {
             winner: false,
             stepNumber: 0,
             selected: null,
-            // movesDescending: true,
+            movesDescending: true,
         }
     }
 
@@ -137,11 +137,11 @@ class Game extends React.Component {
         return null;
     };
 
-    // sortMoves () {
-    //     this.setState({
-    //         movesDescending: !this.state.movesDescending
-    //     })
-    // }
+    sortMoves () {
+        this.setState({
+            movesDescending: !this.state.movesDescending
+        })
+    }
 
     render () {
         const history = this.state.history;
@@ -156,9 +156,11 @@ class Game extends React.Component {
             status = `Next player: ${this.getPlayer()}`;
         }
 
-        // if (!this.state.movesDescending) {
-        //     history = history.reverse();
-        // }
+        let movesClassName = '';
+    
+        if (!this.state.movesDescending) {
+            movesClassName = 'game-moves-reversed'
+        }
 
         const moves = history.map( (board, index) => {
             const { player, moveRow, moveColumn } = board;
@@ -192,10 +194,16 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    {/* <button onClick={() => this.sortMoves()}>
-                        Sort moves
-                    </button> */}
-                    <ol>{moves}</ol>
+                    <button
+                        onClick={() => this.sortMoves()}
+                    >
+                        Sort Moves
+                    </button>
+                    <ol
+                        className={movesClassName}
+                    >
+                        {moves}
+                    </ol>
                 </div>
             </div>
         );

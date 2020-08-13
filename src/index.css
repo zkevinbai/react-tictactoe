@@ -56,3 +56,8 @@ ol, ul {
 .game-move-button-selected {
   font-weight: bold;
 }
+
+ol.game-moves-reversed { 
+    display: flex;
+    flex-direction: column-reverse;
+}
