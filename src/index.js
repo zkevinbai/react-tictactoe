@@ -45,7 +45,7 @@ function Board(props) {
 }
 
 class Game extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props)
         this.state = {
             history: [{
@@ -59,11 +59,11 @@ class Game extends React.Component {
         }
     }
 
-    getPlayer() {
+    getPlayer () {
         return this.state.xIsNext ? 'X' : 'O'
     }
 
-    handleClick(index) {
+    handleClick (index) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const currentBoard = history[history.length - 1];
         const newSquares = currentBoard.squares.slice();
@@ -91,14 +91,14 @@ class Game extends React.Component {
         });
     }
 
-    jumpTo(step) {
+    jumpTo (step) {
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2 === 0),
         });
     }
 
-    calculateWinner(squares) {
+    calculateWinner (squares) {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
