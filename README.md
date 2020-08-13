@@ -12,11 +12,21 @@ https://reactjs.org/tutorial/tutorial.html
 ## Challenges
 
 - [x] Display the location for each move in the format (col, row) in the move history list.
+  - provide row and column data to your squares, pass that information up in their onclick function
 - [x] Bold the currently selected item in the move list.
+  - use the onClick of the move button to set currently selected index in state, apply custom class based on state
 - [x] Rewrite Board to use two loops to make the squares instead of hardcoding them.
+  - this just requires you to be clever, many ways to solve
+  - my solution: `const index = (column - 1) + (3 * (row - 1));`
 - [x] Add a toggle button that lets you sort the moves in either ascending or descending order.
+  - accomplished using https://stackoverflow.com/questions/25695000/how-to-display-a-reverse-ordered-list-in-html
 - [x] When someone wins, highlight the three squares that caused the win.
+  - update the calculateWinner function to calculateWinningMoves, store moves in state
+  - pass down winning moves to squares through board
+  - apply custom styling to square if its index was one of the winning 3
 - [x] When no one wins, display a message about the result being a draw.
+  - calculate tie, set custom status if tie
+  - my solution: `const tie = currentBoard.squares.every(position => position) && !winningMoves;`
 
 ## Available Scripts
 
