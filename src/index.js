@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square({
+    squareClass,
     onClick,
     value,
     index,
@@ -11,7 +12,7 @@ function Square({
 }) {
     return (
         <button 
-            className="square"
+            className={`square ${squareClass}`}
             onClick={() => onClick(index, row, column)}
         >
             {value}
@@ -22,6 +23,7 @@ function Square({
 function Board({ 
     squares,
     onClick,
+    winningMoves,
 }) {
     const columns = [1, 2, 3]
     const rows = [1, 2, 3];
@@ -33,8 +35,15 @@ function Board({
                 // this generates indices 0 through 8
                 // I would prefer to hard code for clarity, this is for a challenge
 
+                let squareClass = "";
+
+                if (winningMoves.includes(index)) {
+                    squareClass = 'square-winning'
+                }
+
                 return (
                     <Square
+                        squareClass={squareClass}
                         key={row + column}
                         value={squares[index]}
                         index={index}
@@ -69,6 +78,7 @@ class Game extends React.Component {
             stepNumber: 0,
             selected: null,
             movesDescending: true,
+            winningMoves: null,
         }
     }
 
@@ -81,7 +91,12 @@ class Game extends React.Component {
         const currentBoard = history[history.length - 1];
         const newSquares = currentBoard.squares.slice();
 
-        if (this.calculateWinner(newSquares) || newSquares[index]) {
+        const winningMoves = this.calculateWinningMoves(newSquares);
+
+        if (winningMoves || newSquares[index]) {
+            this.setState({
+                winningMoves,
+            })
             return;
         }
 
@@ -102,6 +117,7 @@ class Game extends React.Component {
                 // history.length will still evaluate to 1
                 // but 1 is the correct stepNumber to access the last element in the history array
                 // because you count from 0 in JS
+            winningMoves: this.calculateWinningMoves(newSquares),
         });
     }
 
@@ -113,7 +129,7 @@ class Game extends React.Component {
         });
     }
 
-    calculateWinner (squares) {
+    calculateWinningMoves (squares) {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -129,8 +145,8 @@ class Game extends React.Component {
 
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
-            if (squares[a] === squares[b] && squares[b] === squares[c]) {
-                return squares[a];
+            if (squares[a] === squares[b] && squares[b] === squares[c] && squares[a] !== null) {
+                return lines[i];
             }
         }
 
@@ -146,12 +162,12 @@ class Game extends React.Component {
     render () {
         const history = this.state.history;
         const currentBoard = history[this.state.stepNumber];
-        const winner = this.calculateWinner(currentBoard.squares);
+        const winningMoves = this.calculateWinningMoves(currentBoard.squares);
 
         let status;
 
-        if (winner) {
-            status = 'Winner: ' + winner
+        if (winningMoves) {
+            status = 'Winner: ' + currentBoard.squares[winningMoves[0]]
         } else {
             status = `Next player: ${this.getPlayer()}`;
         }
@@ -188,7 +204,8 @@ class Game extends React.Component {
             <div className="game">
                 <div className="game-board">
                     <Board 
-                        squares={ currentBoard.squares}
+                        winningMoves={this.state.winningMoves || []}
+                        squares={currentBoard.squares}
                         onClick={this.handleClick.bind(this)}
                     />
                 </div>
