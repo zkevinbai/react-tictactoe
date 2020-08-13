@@ -19,7 +19,7 @@ function Square({
     );
 }
 
-function Board(props) {
+function Board({ squares, onClick }) {
     const columns = [1, 2, 3]
     const rows = [1, 2, 3];
 
@@ -32,11 +32,11 @@ function Board(props) {
                 return (
                     <Square
                         key={row + column}
-                        value={props.squares[index]}
+                        value={squares[index]}
                         index={index}
                         row={row}
                         column={column}
-                        onClick={props.onClick}
+                        onClick={onClick}
                     />
                 )
             })}
