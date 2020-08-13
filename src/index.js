@@ -2,43 +2,46 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Square(props) {
+function Square({
+    onClick,
+    value,
+    index,
+    row,
+    column,
+}) {
     return (
         <button 
             className="square"
-            onClick={props.onClick}
+            onClick={() => onClick(index, row, column)}
         >
-            {props.value}
+            {value}
         </button>
     );
 }
 
 function Board(props) {
-    const renderSquare = ({index, row, column}) => {
-        return (
-            <Square 
-                key={row + column}
-                value={props.squares[index]} 
-                onClick={() => props.onClick(index, row, column)}
-            />
-        );
-    }
-
     const columns = [1, 2, 3]
+    const rows = [1, 2, 3];
 
     const renderRow = (row) => (
         <div key={row} className="board-row">
-            {columns.map((column) => (
-                renderSquare({
-                index: (column - 1) + (3 * (row - 1)),
-                row, 
-                column,
-            })
-            ))}
+            {columns.map((column) => {
+                const index = (column - 1) + (3 * (row - 1));
+                // this generates indices 0 through 8
+
+                return (
+                    <Square
+                        key={row + column}
+                        value={props.squares[index]}
+                        index={index}
+                        row={row}
+                        column={column}
+                        onClick={props.onClick}
+                    />
+                )
+            })}
         </div>
     )
-
-    const rows = [1, 2, 3];
 
     return (
         <div>
